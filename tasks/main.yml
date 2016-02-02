@@ -1,0 +1,11 @@
+- name: get binary
+  get_url: url=https://github.com/gitinsky/aspk-get-stat/releases/download/0.0.3/aspk-get-stat.linux dest=/usr/local/bin/aspk-get-stat mode=0755
+
+- name: put aspk-get-stat service descriptor
+  template: src=aspk-get-stat-eye.rb dest=/etc/eye/aspk-get-stat-eye.rb owner=root group=root mode=0644
+  notify:
+      - reload eye configs
+      - eye restart aspk-get-stat
+
+- name: load config in eye and restart statsd
+  meta: flush_handlers
